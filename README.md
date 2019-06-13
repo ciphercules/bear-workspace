@@ -28,6 +28,7 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 5. Do you have an ugly computer name? Let's go fix that
 
 ![Ugly Computer Name](images/ugly_computer_name.png?raw=true "Ugly Computer Name")
+
 *Pictured above: ugly computer name*
 
 ## Fix Ugly Computer Name
