@@ -22,8 +22,21 @@ This is taken from this website: https://docs.microsoft.com/en-us/windows/wsl/in
 ```
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 ```
-1. Restart your computer when prompted.
-1. Install Ubuntu for Windows. Just go to the Microsoft store, you cute little animal
+2. Restart your computer when prompted.
+3. Install Ubuntu for Windows. Just go to the Microsoft store, you cute little creature
+4. Launch Ubuntu, and  go through the unix user set up instructions
+5. Do you have an ugly computer name? Let's go fix that
+![Ugly Computer Name](images/ugly_computer_name.png?raw=true "Ugly Computer Name")
+**Pictured above: ugly computer name**
+
+## Fix Ugly Computer Name
+1. Search for "About your PC"
+2. Click "Rename this PC"
+3. Type in your sexy new name
+4. Restart your computer
+
+## Install Hyper JS
+Oh my good, you are adorable. Go get that Hyper JS, you fluffy son of a bitch: https://hyper.is/
 
 
 A place for bears
