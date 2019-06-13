@@ -37,8 +37,10 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 3. Type in your sexy new name
 4. Restart your computer
 
-## Install Hyper JS
-Oh my good, you are adorable. Go get that Hyper JS, you fluffy son of a bitch: https://hyper.is/
+## Set Up HyperJS
+Oh my good, you are adorable. Go get that Hyper JS, you fluffy son of a bitch. 
+
+1. Install HyperJS: https://hyper.is/
 
 
 A place for bears
