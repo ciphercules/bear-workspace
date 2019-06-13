@@ -26,8 +26,9 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 3. Install Ubuntu for Windows. Just go to the Microsoft store, you cute little creature
 4. Launch Ubuntu, and  go through the unix user set up instructions
 5. Do you have an ugly computer name? Let's go fix that
+
 ![Ugly Computer Name](images/ugly_computer_name.png?raw=true "Ugly Computer Name")
-**Pictured above: ugly computer name**
+*Pictured above: ugly computer name*
 
 ## Fix Ugly Computer Name
 1. Search for "About your PC"
