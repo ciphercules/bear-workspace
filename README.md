@@ -38,9 +38,14 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 4. Restart your computer
 
 ## Set Up HyperJS
-Oh my good, you are adorable. Go get that Hyper JS, you fluffy son of a bitch. 
+Oh my good, you are adorable. Go get that Hyper JS, you fluffy son of a bitch.
 
 1. Install HyperJS: https://hyper.is/
+2. Install a pretty little theme for yourself:
+`hyper install hyper-snazzy`
+3. Bear out a little
+![Bear Out](images/bear_out.gif?raw=true "Bear Out")
+
 
 
 A place for bears
