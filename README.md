@@ -47,7 +47,21 @@ Oh my good, you are adorable. Go get that Hyper JS, you fluffy son of a bitch.
 
 ![Bear Out](images/bear_out.gif?raw=true "Bear Out")
 
+4. Update Hyper to start Ubuntu by default when launched
+- Hit `Ctrl` +  `,` to open the HyperJS settings
+-  Scroll down to shell and change it to `C:\\Windows\\System32\\bash.exe`
+```diff
+- shell: '',
++ shell: 'C:\\Windows\\System32\\bash.exe',
+```
 
+## Run Magic Script
+
+Wow, you're so pretty. That fur, what sheen. Your color, your coat. Wonderful.
+Let's keep working though, we'll have time to frolic later. 
+
+1. Run `./bear-with-me.sh`
+2. Rock on
 
 A place for bears
 https://medium.com/@Andreas_cmj/how-to-setup-a-nice-looking-terminal-with-wsl-in-windows-10-creators-update-2b468ed7c326
