@@ -44,6 +44,7 @@ Oh my good, you are adorable. Go get that Hyper JS, you fluffy son of a bitch.
 2. Install a pretty little theme for yourself:
 `hyper install hyper-snazzy`
 3. Bear out a little
+
 ![Bear Out](images/bear_out.gif?raw=true "Bear Out")
 
 
