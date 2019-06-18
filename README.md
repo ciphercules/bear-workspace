@@ -63,9 +63,25 @@ Let's keep working though, we'll have time to frolic later.
 1. Run `./bear-with-me.sh`
 2. Rock on
 
+## Install Powerline Fonts
+Man, those paws are perfect. Round, soft, powerful. *sigh*. Let's install powerline, so our console can go from this
+
+![No Powerline](images/no_powerline.png?raw=true "No Powerline")
+
+To this: 
+
+![Powerline](images/powerline.png?raw=true "Powerline")
+
+1. Download the zip from the [Powerline Github page](https://github.com/powerline/fonts) 
+1. Extract all from the zip
+1. Open a Powershell as Administrator
+1. Navigate to `fonts-master` directory: `cd "${HOME}\Downloads\fonts-master\fonts-master"`
+1. Change the `Execution Policy`: `Set ExecutionPolicy Bypass`
+1. Run `.\install.ps1` script to install the fonts
+1. Change your Hyper font to `Fira Mono for Powerline`
+
 A place for bears
 https://medium.com/@Andreas_cmj/how-to-setup-a-nice-looking-terminal-with-wsl-in-windows-10-creators-update-2b468ed7c326
-https://medium.com/@ssharizal/hyper-js-oh-my-zsh-as-ubuntu-on-windows-wsl-terminal-8bf577cdbd97
 https://blog.joaograssi.com/windows-subsystem-for-linux-with-oh-my-zsh-conemu/
 https://gingter.org/2016/08/17/install-and-run-zsh-on-windows/
 
