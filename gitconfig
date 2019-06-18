@@ -1,0 +1,49 @@
+[alias]
+	st = status
+	di = diff
+	co = checkout
+  ci = commit
+	br = branch
+  cp = cherry-pick
+	sta = stash
+	llog = "log --date=local"
+	flog = "log --pretty=fuller --decorate"
+	lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+  lo = "!git --no-pager log --graph --decorate --pretty=oneline --abbrev-commit --all -n10"
+	lol = "log --graph --decorate --oneline"
+	lola = "log --graph --decorate --oneline --all"
+	blog = "log origin/master... --left-right"
+	ds = "diff --staged"
+	fixup = "commit --fixup"
+	squash = "commit --squash"
+	unstage = "reset HEAD --"
+  rebase = rebase --autosquash
+	rum = "rebase master@{u}"
+	last = log -1 --format=full HEAD
+  standup = "log --since='yesterday'"
+  su = "log --since='yesterday'"
+  sur = submodule update --init --recursive --jobs=7
+[core]
+	pager = less -FXRS -x2
+	filemode = true
+[apply]
+	whitespace = nowarn
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+	ui = auto
+[branch]
+	autosetupmerge = true
+[rebase]
+	autosquash = true
+[push]
+	default = simple
+[user]
+	email = saramontecino@outlook.com	
+	name = Sara Montecino
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gvdiff\" \"$MERGED\"
+[merge]
+	tool = fugitive

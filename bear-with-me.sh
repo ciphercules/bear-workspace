@@ -33,7 +33,7 @@ function updateFile(){
     if [[ "${newLine}" != "" ]]; then
       sed -i "s/^${line}.*/${newLine}/" "${file}"
     else
-      echo "${file} already contains \n${line}\n. Doing nothing"
+      printf "${file} already contains \n${line}\n. Doing nothing"
     fi
   else
     local temp="$(mktemp --directory)/file"
@@ -56,6 +56,9 @@ fi
 
 step "update file" "changing oh my zsh theme to agnoster"
 updateFile "${HOME}/.zshrc" 'ZSH_THEME' 'ZSH_THEME\=\"agnoster\"'
+
+step "copy" "gitconfig"
+cp "${PWD}/gitconfig" "${HOME}/.gitconfig"
 
 echo -e "\e[${green}\n"
 cat <<-'EOF'
