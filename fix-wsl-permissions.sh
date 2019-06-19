@@ -20,9 +20,9 @@ function main() {
  		sudo bash -c "touch /etc/wsl.conf"
 	fi
 
-	if ! grep --fixed-strings --quiet "[autoremove]" "/etc/wsl.conf" ; then
+	if ! grep --fixed-strings --quiet "[automount]" "/etc/wsl.conf" ; then
 		sudo bash -c "cat > /etc/wsl.conf <<-EOF
-		[autoremove]
+		[automount]
 		enabled = true
 		options = \"metadata,umask=22,fmask=11\"
 		EOF

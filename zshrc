@@ -104,3 +104,8 @@ export PATH=$PATH:/usr/local/go/bin
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Note: Bash on Windows does not currently apply umask properly.
+if [[ "$(umask)" = "000" ]]; then
+  umask 0022
+fi
