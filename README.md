@@ -55,13 +55,13 @@ Oh my good, you are adorable. Go get that Hyper JS, you fluffy son of a bitch.
 ## Run Magic Script
 
 Wow, you're so pretty. That fur, what sheen. Your color, your coat. Wonderful.
-Let's keep working though, we'll have time to frolic later. 
+Let's keep working though, we'll have time to frolic later.
 
 1. Run `./fix-wsl-permissions.sh` to fix a bug in WSL where permissions default
    to 0777
-1. Reload the terminal
+1. Restart the terminal
 1. Run `./bear-with-me.sh`
-1. Restart your computer
+1. Reload the terminal
 1. Rock on
 
 ## Install Powerline Fonts
@@ -69,11 +69,11 @@ Man, those paws are perfect. Round, soft, powerful. *sigh*. Let's install powerl
 
 ![No Powerline](images/no_powerline.png?raw=true "No Powerline")
 
-To this: 
+To this:
 
 ![Powerline](images/powerline.png?raw=true "Powerline")
 
-1. Download the zip from the [Powerline Github page](https://github.com/powerline/fonts) 
+1. Download the zip from the [Powerline Github page](https://github.com/powerline/fonts)
 1. Extract all from the zip
 1. Open a Powershell as Administrator
 1. Navigate to `fonts-master` directory: `cd "${HOME}\Downloads\fonts-master\fonts-master"`
@@ -84,14 +84,14 @@ To this:
 A place for bears
 
 ### References
-https://medium.com/@Andreas_cmj/how-to-setup-a-nice-looking-terminal-with-wsl-in-windows-10-creators-update-2b468ed7c326
-https://www.turek.dev/post/fix-wsl-file-permissions/
+- https://medium.com/@Andreas_cmj/how-to-setup-a-nice-looking-terminal-with-wsl-in-windows-10-creators-update-2b468ed7c326
+- https://www.turek.dev/post/fix-wsl-file-permissions/
 
  ```diff
- prompt_context() {                                              
+ prompt_context() {
    if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
--    prompt_segment black default "%(!.%{%F{yellow}%}.)%n@%m"    
-+    prompt_segment 5 15 "%(!.%{%F{yellow}%}.)%n@%m"        
-   fi                                                            
+-    prompt_segment black default "%(!.%{%F{yellow}%}.)%n@%m"
++    prompt_segment 5 15 "%(!.%{%F{yellow}%}.)%n@%m"
+   fi
  }
  ```
