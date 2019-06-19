@@ -9,12 +9,9 @@ If you're a bear, congratulations, you good-looking animal! Follow these steps t
 get a workspace that works well, looks great, and is up to bear standards.
 
 This will give you a few things:
-- Hyper.js
 - Ubuntu WSL
-- neovim
-- nvim config for working with go
-- python3
-- git
+- Hyper.js
+- Powerline Optmized Fonts
 
 ## Install Ubuntu on Windows Subsystem linux
 This is taken from this website: https://docs.microsoft.com/en-us/windows/wsl/install-win10
@@ -60,8 +57,12 @@ Oh my good, you are adorable. Go get that Hyper JS, you fluffy son of a bitch.
 Wow, you're so pretty. That fur, what sheen. Your color, your coat. Wonderful.
 Let's keep working though, we'll have time to frolic later. 
 
+1. Run `./fix-wsl-permissions.sh` to fix a bug in WSL where permissions default
+   to 0777
+1. Reload the terminal
 1. Run `./bear-with-me.sh`
-2. Rock on
+1. Restart your computer
+1. Rock on
 
 ## Install Powerline Fonts
 Man, those paws are perfect. Round, soft, powerful. *sigh*. Let's install powerline, so our console can go from this
@@ -84,7 +85,6 @@ A place for bears
 
 ### References
 https://medium.com/@Andreas_cmj/how-to-setup-a-nice-looking-terminal-with-wsl-in-windows-10-creators-update-2b468ed7c326
-https://medium.com/@jrcharney/bash-on-ubuntu-on-windows-the-almost-complete-set-up-1dd3cb89b794
 https://www.turek.dev/post/fix-wsl-file-permissions/
 
  ```diff

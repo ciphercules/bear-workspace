@@ -1,5 +1,7 @@
 #!/bin/bash -eu
 
+set -o pipefail
+
 default='39m'
 blue='34m'
 cyan='36m'
@@ -18,13 +20,13 @@ function step() {
 
 # Takes two arguments
 # 1: The file to update
-# 2: The original line 
+# 2: The original line
 # 3: The new line (optional, if just adding)
 function updateFile(){
   local file="${1}"
   local line="${2}"
   local newLine=${3:-""}
-  
+
   if [ ! -f "${file}" ]; then
     touch "${file}"
   fi
@@ -42,43 +44,89 @@ function updateFile(){
   fi
 }
 
-# See https://www.turek.dev/post/fix-wsl-file-permissions/
-function fixWslPermissions() {
-	if [ ! -f "${HOME}/.profile" ]; then
-		touch "${HOME}/.profile"
+# Takes 1 argument
+# 1: package to install
+function aptGetInstall() {
+	local package="${1}"
+	if ! dpkg -s "${package}" &>/dev/null ; then
+		step apt-get "installing ${package}"
+		sudo apt-get install "${package}" -y
 	fi
+}
 
-	if ! grep --fixed-strings --quiet "umask 0022" "${HOME}/.profile" ; then
-		cat >> "${HOME}/.profile" <<-EOF 
-		# Note: Bash on Windows does not currently apply umask properly.
-		if [ "\$(umask)" = "0000" ]; then
-			  umask 0022
-		fi
-		EOF
+function installPPA() {
+	aptGetInstall "software-properties-common"
+	if ! grep --quiet "neovim-ppa" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+		step "add-apt-repository" "add neovim ppa"
+		sudo add-apt-repository ppa:neovim-ppa/stable -y
+		sudo apt-get update
 	fi
+}
 
-	if [ ! -f "/etc/wsl.conf" ]; then
-		touch "/etc/wsl.conf"
+function setNvimAsAlternatives() {
+	step "update-alternatives" "setting neovim as alternatives"
+	sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+	sudo update-alternatives --config vi --skip-auto
+	sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+	sudo update-alternatives --config vim --skip-auto
+	sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+	sudo update-alternatives --config editor --skip-auto
+}
+
+# Takes two arguments
+# 1: Install Path
+# 2: Git Repo
+function gitClone() {
+	local path="${1}"
+	local repo="${2}"
+
+	if [ ! -d ${path} ]; then
+		step "git" "cloning ${repo}"
+		git clone "${repo}" ${path}
 	fi
+}
 
-	if ! grep --fixed-strings --quiet "[autoremove]" "${HOME}/.profile" ; then
-		step 'create' 'add wsl.conf file with permissions fix'
-		sudo bash -c "cat > /etc/wsl.conf <<-EOF
-		[autoremove]
-		enabled = true
-		options = \"metadata,umask=22,fmask=11\"
-		EOF
-		"
+function installYarnDl() {
+	if ! grep --quiet "yarn" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+		step "apt-get" "install yarn PPA"
+		curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+		echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+		sudo apt-get update
 	fi
 }
 
 function main() {
-if [ -z $(which zsh) ]; then
-	step apt-get "installing zsh"
-	sudo apt-get update && sudo apt-get install zsh -y
-fi
 
-fixWslPermissions
+	# Neovim needs a custom PPA. See https://github.com/neovim/neovim/wiki/Installing-Neovim
+	installPPA
+	# Yarn needs a custom thing too. See https://linuxize.com/post/how-to-install-yarn-on-ubuntu-18-04/
+	installYarnDl
+
+	declare -a packages=(
+	"zsh"
+	"neovim"
+	"python-dev"
+	"python-pip"
+	"python3-dev"
+	"python3-pip"
+	"nodejs"
+	"npm"
+	"yarn"
+	)
+
+	for package in "${packages[@]}"
+	do
+		aptGetInstall "${package}"
+	done
+
+	declare -a pipPackages=(
+	"pynvim"
+	)
+
+	for package in "${pipPackages[@]}"
+	do
+		pip3 install "${package}"
+	done
 
 step "update file" 'adding zsh to ~/.bashrc'
 updateFile "${HOME}/.bashrc" 'bash -c zsh'
@@ -98,33 +146,35 @@ step "copy" "custom aliases"
 cp "${PWD}/aliases.zsh" "${HOME}/.oh-my-zsh/custom/aliases.zsh"
 
 local zsh_syntax_highlighting_path="${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
-if [ ! -d ${zsh_syntax_highlighting_path} ]; then
-	step "zsh" "cloning syntax highliting repo"
-	git clone "git@github.com:zsh-users/zsh-syntax-highlighting.git" ${zsh_syntax_highlighting_path}
-fi
+gitClone "${zsh_syntax_highlighting_path}" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+
+setNvimAsAlternatives
+local nvim_config_path="${HOME}/.config/nvim"
+gitClone "${nvim_config_path}" "https://github.com/luan/nvim"
+
 
 echo -e "\e[${green}\n"
 cat <<-'EOF'
-$$\     $$\                         $$$$$$$\                                
-\$$\   $$  |                        $$  __$$\                               
- \$$\ $$  /$$$$$$\  $$\   $$\       $$ |  $$ | $$$$$$\   $$$$$$\  $$$$$$$\  
+$$\     $$\                         $$$$$$$\
+\$$\   $$  |                        $$  __$$\
+ \$$\ $$  /$$$$$$\  $$\   $$\       $$ |  $$ | $$$$$$\   $$$$$$\  $$$$$$$\ 
   \$$$$  /$$  __$$\ $$ |  $$ |      $$$$$$$\ |$$  __$$\ $$  __$$\ $$  __$$\ 
    \$$  / $$ /  $$ |$$ |  $$ |      $$  __$$\ $$$$$$$$ |$$$$$$$$ |$$ |  $$ |
     $$ |  $$ |  $$ |$$ |  $$ |      $$ |  $$ |$$   ____|$$   ____|$$ |  $$ |
     $$ |  \$$$$$$  |\$$$$$$  |      $$$$$$$  |\$$$$$$$\ \$$$$$$$\ $$ |  $$ |
     \__|   \______/  \______/       \_______/  \_______| \_______|\__|  \__|
-                                                                            
-                                                                            
-                                                                            
-$$$$$$$\  $$$$$$$$\  $$$$$$\  $$$$$$$\  $$$$$$$$\ $$$$$$$\                  
-$$  __$$\ $$  _____|$$  __$$\ $$  __$$\ $$  _____|$$  __$$\                 
-$$ |  $$ |$$ |      $$ /  $$ |$$ |  $$ |$$ |      $$ |  $$ |                
-$$$$$$$\ |$$$$$\    $$$$$$$$ |$$$$$$$  |$$$$$\    $$ |  $$ |                
-$$  __$$\ $$  __|   $$  __$$ |$$  __$$< $$  __|   $$ |  $$ |                
-$$ |  $$ |$$ |      $$ |  $$ |$$ |  $$ |$$ |      $$ |  $$ |                
-$$$$$$$  |$$$$$$$$\ $$ |  $$ |$$ |  $$ |$$$$$$$$\ $$$$$$$  |                
-\_______/ \________|\__|  \__|\__|  \__|\________|\_______/                 
-                                                              
+
+
+
+$$$$$$$\  $$$$$$$$\  $$$$$$\  $$$$$$$\  $$$$$$$$\ $$$$$$$\ 
+$$  __$$\ $$  _____|$$  __$$\ $$  __$$\ $$  _____|$$  __$$\ 
+$$ |  $$ |$$ |      $$ /  $$ |$$ |  $$ |$$ |      $$ |  $$ |
+$$$$$$$\ |$$$$$\    $$$$$$$$ |$$$$$$$  |$$$$$\    $$ |  $$ |
+$$  __$$\ $$  __|   $$  __$$ |$$  __$$< $$  __|   $$ |  $$ |
+$$ |  $$ |$$ |      $$ |  $$ |$$ |  $$ |$$ |      $$ |  $$ |
+$$$$$$$  |$$$$$$$$\ $$ |  $$ |$$ |  $$ |$$$$$$$$\ $$$$$$$  |
+\_______/ \________|\__|  \__|\__|  \__|\________|\_______/
+
 EOF
 echo -e "\e[${default}"
 }
