@@ -42,9 +42,43 @@ function updateFile(){
   fi
 }
 
+# See https://www.turek.dev/post/fix-wsl-file-permissions/
+function fixWslPermissions() {
+	if [ ! -f "${HOME}/.profile" ]; then
+		touch "${HOME}/.profile"
+	fi
+
+	if ! grep --fixed-strings --quiet "umask 0022" "${HOME}/.profile" ; then
+		cat >> "${HOME}/.profile" <<-EOF 
+		# Note: Bash on Windows does not currently apply umask properly.
+		if [ "\$(umask)" = "0000" ]; then
+			  umask 0022
+		fi
+		EOF
+	fi
+
+	if [ ! -f "/etc/wsl.conf" ]; then
+		touch "/etc/wsl.conf"
+	fi
+
+	if ! grep --fixed-strings --quiet "[autoremove]" "${HOME}/.profile" ; then
+		step 'create' 'add wsl.conf file with permissions fix'
+		sudo bash -c "cat > /etc/wsl.conf <<-EOF
+		[autoremove]
+		enabled = true
+		options = \"metadata,umask=22,fmask=11\"
+		EOF
+		"
+	fi
+}
+
 function main() {
-step apt-get "installing zsh"
-sudo apt-get update && sudo apt-get install zsh -y
+if [ -z $(which zsh) ]; then
+	step apt-get "installing zsh"
+	sudo apt-get update && sudo apt-get install zsh -y
+fi
+
+fixWslPermissions
 
 step "update file" 'adding zsh to ~/.bashrc'
 updateFile "${HOME}/.bashrc" 'bash -c zsh'
@@ -54,11 +88,20 @@ if [ ! -d "${HOME}/.oh-my-zsh" ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
-step "update file" "changing oh my zsh theme to agnoster"
-updateFile "${HOME}/.zshrc" 'ZSH_THEME' 'ZSH_THEME\=\"agnoster\"'
-
 step "copy" "gitconfig"
 cp "${PWD}/gitconfig" "${HOME}/.gitconfig"
+
+step "copy" "zshrc"
+cp "${PWD}/zshrc" "${HOME}/.zshrc"
+
+step "copy" "custom aliases"
+cp "${PWD}/aliases.zsh" "${HOME}/.oh-my-zsh/custom/aliases.zsh"
+
+local zsh_syntax_highlighting_path="${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+if [ ! -d ${zsh_syntax_highlighting_path} ]; then
+	step "zsh" "cloning syntax highliting repo"
+	git clone "git@github.com:zsh-users/zsh-syntax-highlighting.git" ${zsh_syntax_highlighting_path}
+fi
 
 echo -e "\e[${green}\n"
 cat <<-'EOF'

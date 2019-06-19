@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/sara/.oh-my-zsh"
+export ZSH="/home/sara/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -69,16 +69,11 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-eval $(dircolors ~/config/dircolors-solarized/dircolors.256dark)
 
 # zsh-history key bindings
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
 
-# bind UP and DOWN arrow keys (compatibility fallback
-# for Ubuntu 12.04, Fedora 21, and MacOSX 10.9 users)
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -108,9 +103,4 @@ export PATH=$PATH:/usr/local/go/bin
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias reload="source ~/.zshrc"
-alias ll="ls -lha"
-alias vim=nvim
-alias wd="cd /mnt/c/Users/saram/workspace/"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

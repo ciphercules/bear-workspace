@@ -81,9 +81,11 @@ To this:
 1. Change your Hyper font to `Fira Mono for Powerline`
 
 A place for bears
+
+### References
 https://medium.com/@Andreas_cmj/how-to-setup-a-nice-looking-terminal-with-wsl-in-windows-10-creators-update-2b468ed7c326
-https://blog.joaograssi.com/windows-subsystem-for-linux-with-oh-my-zsh-conemu/
-https://gingter.org/2016/08/17/install-and-run-zsh-on-windows/
+https://medium.com/@jrcharney/bash-on-ubuntu-on-windows-the-almost-complete-set-up-1dd3cb89b794
+https://www.turek.dev/post/fix-wsl-file-permissions/
 
  ```diff
  prompt_context() {                                              
