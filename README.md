@@ -106,7 +106,7 @@ If this happened to you, with those soft fluffy feet, check your Windows 10 vers
 1. Run it, and it should install the latest version of Windows for you
 
 **But why?**
-Great question! Here's a fish :fish: This one took a good amount of sleuthing to discover, but I one good clue to get started: the colors displayed pretty well when using the defautl terminal emulator that runs when you run the Ubuntu app. 
+Great question! Here's a fish :fish: This one took a good amount of sleuthing to discover, but I one good clue to get started: the colors displayed pretty well when using the default terminal emulator that runs when you run the Ubuntu app. 
 
 Which led me to think that it might be a problem with HyperJs, and not actually an issue with the nvim config, or something inherently wrong with running the config on WSL. Then I found this issue thread: https://github.com/zeit/hyper/issues/1968, and I ran the prescribed [Ansi Tests](https://github.com/zeit/hyper/issues/1968#issuecomment-324197471) myself. 
 1. Save [AnsiColors256.ans](https://github.com/Maximus5/ConEmu/blob/master/Release/ConEmu/Addons/AnsiColors256.ans)
@@ -137,12 +137,3 @@ The final result isn't perfect, with the brown shading, but it's close enough to
 ### References
 - https://medium.com/@Andreas_cmj/how-to-setup-a-nice-looking-terminal-with-wsl-in-windows-10-creators-update-2b468ed7c326
 - https://www.turek.dev/post/fix-wsl-file-permissions/
-
- ```diff
- prompt_context() {
-   if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
--    prompt_segment black default "%(!.%{%F{yellow}%}.)%n@%m"
-+    prompt_segment 5 15 "%(!.%{%F{yellow}%}.)%n@%m"
-   fi
- }
- ```
