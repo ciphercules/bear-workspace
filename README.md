@@ -1,3 +1,5 @@
+A place for bears
+
 ## Setting Up a Bear Workspace
 
 This workspace is optimized for bear development. If you're a human, this just
@@ -81,7 +83,58 @@ To this:
 1. Run `.\install.ps1` script to install the fonts
 1. Change your Hyper font to `Fira Mono for Powerline`
 
-A place for bears
+## Troubleshooting
+
+Let's face it, bears are clumsy creatures. It's nothing against you, honestly, it's just part of your nature. You can't be beautiful, intelligent, charismatic, *and* graceful. That's just too much good for a single package. So let's dive into some clumsy bear problems you may have encountered along the way. 
+
+### Vim Colors are Totally Uggo
+So you ran `bear-with-me.sh` and your colors are totally bland and just *blegh*. 
+
+![Bland Colors](images/ugly_vim.png?raw=true "Bland Colors")
+
+You know that you have the [onedark](https://github.com/joshdick/onedark.vim) installed via the nvim config you've loaded, so it should look beautiful. 
+
+[Beautiful Colors](images/beautiful_colors.png?raw=true "Beautiful Colors")
+
+If this happened to you, with those soft fluffy feet, check your Windows 10 version. 
+1. Type `About your PC` in the search bar
+1. Scroll to the `Windows specifications` section
+1. If `Version` is **less** than `1809`, then you need to update your version.
+
+**Update Windows 10 Version**
+1. Download the Windows provided [update installer](https://www.microsoft.com/en-us/software-download/windows10)
+1. Run it, and it should install the latest version of Windows for you
+
+**But why?**
+Great question! Here's a fish :fish: This one took a good amount of sleuthing to discover, but I one good clue to get started: the colors displayed pretty well when using the defautl terminal emulator that runs when you run the Ubuntu app. 
+
+Which led me to think that it might be a problem with HyperJs, and not actually an issue with the nvim config, or something inherently wrong with running the config on WSL. Then I found this issue thread: https://github.com/zeit/hyper/issues/1968, and I ran the prescribed [Ansi Tests](https://github.com/zeit/hyper/issues/1968#issuecomment-324197471) myself. 
+1. Save [AnsiColors256.ans](https://github.com/Maximus5/ConEmu/blob/master/Release/ConEmu/Addons/AnsiColors256.ans)
+1. Run `type AnsiColors256.ans` in Powershell
+1. Change HyperJs to launch Powershell by default by editing the config
+- Hit `Ctrl` +  `,` to open the HyperJS settings
+-  Scroll down to shell and change default shell
+```diff
++ shell: '',
+- shell: 'C:\\Windows\\System32\\bash.exe',
+```
+4. Repeat steps 1 & 2
+
+According to the thread, if I was on a version of Windows 10 less than 1809, I should see a problem. And it turns out I was on 1803. Here are the results of that test:
+
+![Powershell](images/powershell_1803.png?raw=true "Powershell")
+
+*Windows Powershell*
+
+![HyperJs](images/hyper_1803.png?raw=true "HyperJs")
+
+*Hyper JS*
+
+The fix is as simple as updating your Windows 10 version, which pulls in [this release](https://github.com/microsoft/node-pty/releases/tag/0.8.0) of `node-pty`, a library that supports writing terminal emulators for Windows on NodeJs (i.e. HyperJs)
+
+The final result isn't perfect, with the brown shading, but it's close enough to what I wanted that there's no real gain in further investigation. 
+
+![Pretty Terminal](images/pretty_vim.png?raw=true "Pretty Terminal")
 
 ### References
 - https://medium.com/@Andreas_cmj/how-to-setup-a-nice-looking-terminal-with-wsl-in-windows-10-creators-update-2b468ed7c326
