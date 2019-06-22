@@ -90,11 +90,11 @@ Let's face it, bears are clumsy creatures. It's nothing against you, honestly, i
 ### Vim Colors are Totally Uggo
 So you ran `bear-with-me.sh` and your colors are totally bland and just *blegh*. 
 
-![Bland Colors](images/ugly_vim.png?raw=true "Bland Colors")
+![Bland Colors](images/ugly_nvim.png "Bland Colors")
 
 You know that you have the [onedark](https://github.com/joshdick/onedark.vim) installed via the nvim config you've loaded, so it should look beautiful. 
 
-[Beautiful Colors](images/beautiful_colors.png?raw=true "Beautiful Colors")
+![Beautiful Colors](images/beautiful_colors.png "Beautiful Colors")
 
 If this happened to you, with those soft fluffy feet, check your Windows 10 version. 
 1. Type `About your PC` in the search bar
@@ -122,13 +122,11 @@ Which led me to think that it might be a problem with HyperJs, and not actually 
 
 According to the thread, if I was on a version of Windows 10 less than 1809, I should see a problem. And it turns out I was on 1803. Here are the results of that test:
 
+*Windows Powershell*
 ![Powershell](images/powershell_1803.png?raw=true "Powershell")
 
-*Windows Powershell*
-
-![HyperJs](images/hyper_1803.png?raw=true "HyperJs")
-
 *Hyper JS*
+![HyperJs](images/hyper_1803.png?raw=true "HyperJs")
 
 The fix is as simple as updating your Windows 10 version, which pulls in [this release](https://github.com/microsoft/node-pty/releases/tag/0.8.0) of `node-pty`, a library that supports writing terminal emulators for Windows on NodeJs (i.e. HyperJs)
 
