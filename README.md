@@ -134,6 +134,19 @@ The final result isn't perfect, with the brown shading, but it's close enough to
 
 ![Pretty Terminal](images/pretty_vim.png?raw=true "Pretty Terminal")
 
+### coc.vim Is Not Happy With Me
+Oh, silly silly animal. Do you keep seeing this pop up whenever you open vim?
+```
+[coc.nvim] javascript file not found, please compile the code or use release branch.
+```
+
+It's okay, sweet little bear. Just run these steps to fix it:
+
+1. Open vim
+1. Type :checkhealth
+1. You'll probably see this suggested help: `ERROR: Javascript entry not found, run ":call coc#util#install()" to fix it.`
+1. Do the suggested help!
+
 ### References
 - https://medium.com/@Andreas_cmj/how-to-setup-a-nice-looking-terminal-with-wsl-in-windows-10-creators-update-2b468ed7c326
 - https://www.turek.dev/post/fix-wsl-file-permissions/
