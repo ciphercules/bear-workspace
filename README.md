@@ -149,7 +149,7 @@ It's okay, sweet little bear. Just run these steps to fix it:
 1. You'll probably see this suggested help: `ERROR: Javascript entry not found, run ":call coc#util#install()" to fix it.`
 1. Do the suggested help!
 
-## vim-go Is a Grumpy Goose*
+### vim-go Is a Grumpy Goose
 Geese are troubled characters, so we need to make sure there's no goose trouble in our config! You seeing an error like this pop up when you're viewing a Golang file?
 ```
 Error detected while processing function <SNR>36_register[5]..go#lsp#DidOpen
