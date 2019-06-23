@@ -13,7 +13,9 @@ get a workspace that works well, looks great, and is up to bear standards.
 This will give you a few things:
 - Ubuntu WSL
 - Hyper.js
-- Powerline Optmized Fonts
+- Zsh & Oh My Zsh
+- Neovim and a kitted config
+- Development tools for bear work
 
 ## Install Ubuntu on Windows Subsystem linux
 This is taken from this website: https://docs.microsoft.com/en-us/windows/wsl/install-win10
