@@ -90,10 +90,12 @@ Let's face it, bears are clumsy creatures. It's nothing against you, honestly, i
 ### Vim Colors are Totally Uggo
 So you ran `bear-with-me.sh` and your colors are totally bland and just *blegh*. 
 
+*Uggo Colors*
 ![Bland Colors](images/ugly_nvim.png "Bland Colors")
 
 You know that you have the [onedark](https://github.com/joshdick/onedark.vim) installed via the nvim config you've loaded, so it should look beautiful. 
 
+*Beautiful Colors*
 ![Beautiful Colors](images/beautiful_colors.png "Beautiful Colors")
 
 If this happened to you, with those soft fluffy feet, check your Windows 10 version. 
@@ -146,6 +148,19 @@ It's okay, sweet little bear. Just run these steps to fix it:
 1. Type :checkhealth
 1. You'll probably see this suggested help: `ERROR: Javascript entry not found, run ":call coc#util#install()" to fix it.`
 1. Do the suggested help!
+
+## vim-go Is a Grumpy Goose*
+Geese are troubled characters, so we need to make sure there's no goose trouble in our config! You seeing an error like this pop up when you're viewing a Golang file?
+```
+Error detected while processing function <SNR>36_register[5]..go#lsp#DidOpen
+line 14
+Unknown function: sendMessage
+E15: Invalid expression: l:lsp.sendMessage(l:msg, l:state)
+```
+
+First off, when you see an error like this, you can run `:scriptnames`, and then find the script whose number corresponds with the error, so in this case, script number 36. That can be helpful in the future if you don't know what's going on. 
+
+In this case, you need to run `:GoInstallBinaries` to finish the vim-go installation. That should add some binaries to your `nvim` config directory, and then you should be on happy trails once again. 
 
 ### References
 - https://medium.com/@Andreas_cmj/how-to-setup-a-nice-looking-terminal-with-wsl-in-windows-10-creators-update-2b468ed7c326
