@@ -152,6 +152,14 @@ setNvimAsAlternatives
 local nvim_config_path="${HOME}/.config/nvim"
 gitClone "${nvim_config_path}" "https://github.com/luan/nvim"
 
+if [ -z $(which go) ]; then
+step "install" "go cli"
+download_location="$(mktemp --directory)/go.tgz"
+curl --fail --output "${download_location}" "https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz"
+sudo tar -C '/usr/local' -xzf "${download_location}"
+rm "${download_location}"
+fi
+
 
 echo -e "\e[${green}\n"
 cat <<-'EOF'
