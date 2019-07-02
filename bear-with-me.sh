@@ -95,6 +95,16 @@ function installYarnDl() {
 	fi
 }
 
+function link() {
+  local original_file="$1"
+  local linked_file="$2"
+
+  if [ ! -f ${linked_file} ]; then
+    step "link" "${linked_file}"
+    ln -s "${original_file}" "${linked_file}"
+  fi
+}
+
 function main() {
 
 # Neovim needs a custom PPA. See https://github.com/neovim/neovim/wiki/Installing-Neovim
@@ -136,14 +146,9 @@ if [ ! -d "${HOME}/.oh-my-zsh" ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
-step "copy" "gitconfig"
-cp "${PWD}/gitconfig" "${HOME}/.gitconfig"
-
-step "copy" "zshrc"
-cp "${PWD}/zshrc" "${HOME}/.zshrc"
-
-step "copy" "custom aliases"
-cp "${PWD}/aliases.zsh" "${HOME}/.oh-my-zsh/custom/aliases.zsh"
+link "${PWD}/gitconfig" "${HOME}/.gitconfig"
+link "${PWD}/zshrc" "${HOME}/.zshrc"
+link "${PWD}/aliases.zsh" "${HOME}/.oh-my-zsh/custom/aliases.zsh"
 
 local zsh_syntax_highlighting_path="${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 gitClone "${zsh_syntax_highlighting_path}" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
@@ -160,6 +165,15 @@ if [ -z $(which go) ]; then
   rm "${download_location}"
 fi
 
+if [ ! -d  "${HOME}/workspace" ]; then
+  step "mkdir" "making workspace"
+  mkdir "${HOME}/workspace"
+fi
+
+if [ ! -d  "${HOME}/workspace/go" ]; then
+  step "mkdir" "making gopath"
+  mkdir "${HOME}/workspace/go"
+fi
 
 echo -e "\e[${green}\n"
 cat <<-'EOF'
