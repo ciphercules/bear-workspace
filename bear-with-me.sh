@@ -131,11 +131,12 @@ done
 
 declare -a pipPackages=(
   "pynvim"
+  "pipenv"
 )
 
 for package in "${pipPackages[@]}"
 do
-  pip3 install "${package}"
+  pip3 install --user "${package}"
 done
 
 step "update file" 'adding zsh to ~/.bashrc'
