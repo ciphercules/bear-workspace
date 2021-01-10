@@ -93,8 +93,9 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-export PATH=$PATH:/usr/local/go/bin
+export GOPATH="${HOME}/workspace/go"
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+export PATH=$PATH:$HOME/.local/bin
 #Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.

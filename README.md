@@ -81,8 +81,9 @@ To this:
 1. Extract all from the zip
 1. Open a Powershell as Administrator
 1. Navigate to `fonts-master` directory: `cd "${HOME}\Downloads\fonts-master\fonts-master"`
-1. Change the `Execution Policy`: `Set ExecutionPolicy Bypass`
+1. Change the `Execution Policy`: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass`
 1. Run `.\install.ps1` script to install the fonts
+1. Set your execution policy back to what it was before: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Undefined`
 1. Change your Hyper font to `Fira Mono for Powerline`
 
 ## Troubleshooting

@@ -95,38 +95,49 @@ function installYarnDl() {
 	fi
 }
 
+function link() {
+  local original_file="$1"
+  local linked_file="$2"
+
+  if [ ! -f ${linked_file} ]; then
+    step "link" "${linked_file}"
+    ln -s "${original_file}" "${linked_file}"
+  fi
+}
+
 function main() {
 
-	# Neovim needs a custom PPA. See https://github.com/neovim/neovim/wiki/Installing-Neovim
-	installPPA
-	# Yarn needs a custom thing too. See https://linuxize.com/post/how-to-install-yarn-on-ubuntu-18-04/
-	installYarnDl
+# Neovim needs a custom PPA. See https://github.com/neovim/neovim/wiki/Installing-Neovim
+installPPA
+# Yarn needs a custom thing too. See https://linuxize.com/post/how-to-install-yarn-on-ubuntu-18-04/
+installYarnDl
 
-	declare -a packages=(
-	"zsh"
-	"neovim"
-	"python-dev"
-	"python-pip"
-	"python3-dev"
-	"python3-pip"
-	"nodejs"
-	"npm"
-	"yarn"
-	)
+declare -a packages=(
+  "zsh"
+  "neovim"
+  "python-dev"
+  "python-pip"
+  "python3-dev"
+  "python3-pip"
+  "nodejs"
+  "npm"
+  "yarn"
+)
 
-	for package in "${packages[@]}"
-	do
-		aptGetInstall "${package}"
-	done
+for package in "${packages[@]}";
+do
+  aptGetInstall "${package}"
+done
 
-	declare -a pipPackages=(
-	"pynvim"
-	)
+declare -a pipPackages=(
+  "pynvim"
+  "pipenv"
+)
 
-	for package in "${pipPackages[@]}"
-	do
-		pip3 install "${package}"
-	done
+for package in "${pipPackages[@]}"
+do
+  pip3 install --user "${package}"
+done
 
 step "update file" 'adding zsh to ~/.bashrc'
 updateFile "${HOME}/.bashrc" 'bash -c zsh'
@@ -136,14 +147,9 @@ if [ ! -d "${HOME}/.oh-my-zsh" ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
-step "copy" "gitconfig"
-cp "${PWD}/gitconfig" "${HOME}/.gitconfig"
-
-step "copy" "zshrc"
-cp "${PWD}/zshrc" "${HOME}/.zshrc"
-
-step "copy" "custom aliases"
-cp "${PWD}/aliases.zsh" "${HOME}/.oh-my-zsh/custom/aliases.zsh"
+link "${PWD}/gitconfig" "${HOME}/.gitconfig"
+link "${PWD}/zshrc" "${HOME}/.zshrc"
+link "${PWD}/aliases.zsh" "${HOME}/.oh-my-zsh/custom/aliases.zsh"
 
 local zsh_syntax_highlighting_path="${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 gitClone "${zsh_syntax_highlighting_path}" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
@@ -158,13 +164,22 @@ cp ${PWD}/init.vim "${HOME}/.config/nvim"
 
 
 if [ -z $(which go) ]; then
-step "install" "go cli"
-download_location="$(mktemp --directory)/go.tgz"
-curl --fail --output "${download_location}" "https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz"
-sudo tar -C '/usr/local' -xzf "${download_location}"
-rm "${download_location}"
+  step "install" "go cli"
+  download_location="$(mktemp --directory)/go.tgz"
+  curl --fail --output "${download_location}" "https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz"
+  sudo tar -C '/usr/local' -xzf "${download_location}"
+  rm "${download_location}"
 fi
 
+if [ ! -d  "${HOME}/workspace" ]; then
+  step "mkdir" "making workspace"
+  mkdir "${HOME}/workspace"
+fi
+
+if [ ! -d  "${HOME}/workspace/go" ]; then
+  step "mkdir" "making gopath"
+  mkdir "${HOME}/workspace/go"
+fi
 
 echo -e "\e[${green}\n"
 cat <<-'EOF'
