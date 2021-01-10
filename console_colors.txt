@@ -1,0 +1,19 @@
+Color        R   G   B
+########################
+
+black        40  44  52
+blue         97  175 239
+green        152 195 121
+cyan         86  182 194
+red          224 108 117
+pink         198 120 221
+yellow       209 154 102
+white        171 178 191
+black-light  130 137 151
+blue-light   97  175 239
+green-light  152 195 121
+cyan-light   86  182 194
+red-light    229 132 123
+pink-light   198 120 221
+yellow-light 229 192 123
+white-light  255 255 255

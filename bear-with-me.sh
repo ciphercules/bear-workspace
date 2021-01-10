@@ -148,9 +148,14 @@ cp "${PWD}/aliases.zsh" "${HOME}/.oh-my-zsh/custom/aliases.zsh"
 local zsh_syntax_highlighting_path="${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 gitClone "${zsh_syntax_highlighting_path}" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
 
+step "customize" "nvim"
 setNvimAsAlternatives
-local nvim_config_path="${HOME}/.config/nvim"
-gitClone "${nvim_config_path}" "https://github.com/luan/nvim"
+
+curl -fLo "${HOME}/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
+  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+cp ${PWD}/init.vim "${HOME}/.config/nvim"
+
 
 if [ -z $(which go) ]; then
 step "install" "go cli"
