@@ -24,6 +24,7 @@ function main() {
 		sudo bash -c "cat > /etc/wsl.conf <<-EOF
 		[automount]
 		enabled = true
+		root = /
 		options = \"metadata,umask=22,fmask=11\"
 		EOF
 		"
