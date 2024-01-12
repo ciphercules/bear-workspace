@@ -23,6 +23,7 @@
   standup = "log --since='yesterday'"
   su = "log --since='yesterday'"
   sur = submodule update --init --recursive --jobs=7
+  wd="!git diff --word-diff=porcelain | rg '^[+-][^+-]' | wc --words"
 [core]
 	pager = less -FXRS -x2
 	filemode = true
@@ -41,7 +42,7 @@
 [push]
 	default = simple
 [user]
-	email = saramontecino@outlook.com	
+	email = saramontecino@outlook.com
 	name = Sara Montecino
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gvdiff\" \"$MERGED\"

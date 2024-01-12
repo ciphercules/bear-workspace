@@ -110,3 +110,15 @@ export PATH=$PATH:$HOME/.local/bin
 if [[ "$(umask)" = "000" ]]; then
   umask 0022
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Set up stupid ruby shit.
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+export PATH="$HOME/.rbenv/versions/3.2.0/bin:$PATH"
+
+# Configure FZF to use ripgrep
+export FZF_DEFAULT_COMMAND='rg --files --ignore-vcs --hidden'
