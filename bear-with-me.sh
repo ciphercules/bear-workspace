@@ -86,15 +86,6 @@ function gitClone() {
 	fi
 }
 
-function installYarnDl() {
-	if ! grep --quiet "yarn" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
-		step "apt-get" "install yarn PPA"
-		curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-		echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-		sudo apt-get update
-	fi
-}
-
 function link() {
   local original_file="$1"
   local linked_file="$2"
@@ -109,19 +100,12 @@ function main() {
 
 # Neovim needs a custom PPA. See https://github.com/neovim/neovim/wiki/Installing-Neovim
 installPPA
-# Yarn needs a custom thing too. See https://linuxize.com/post/how-to-install-yarn-on-ubuntu-18-04/
-installYarnDl
 
 declare -a packages=(
   "zsh"
   "neovim"
-  "python-dev"
-  "python-pip"
   "python3-dev"
   "python3-pip"
-  "nodejs"
-  "npm"
-  "yarn"
 )
 
 for package in "${packages[@]}";
@@ -163,30 +147,17 @@ curl -fLo "${HOME}/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
 cp ${PWD}/init.vim "${HOME}/.config/nvim"
 
 
-if [ -z $(which go) ]; then
-  step "install" "go cli"
-  download_location="$(mktemp --directory)/go.tgz"
-  curl --fail --output "${download_location}" "https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz"
-  sudo tar -C '/usr/local' -xzf "${download_location}"
-  rm "${download_location}"
-fi
-
 if [ ! -d  "${HOME}/workspace" ]; then
   step "mkdir" "making workspace"
   mkdir "${HOME}/workspace"
-fi
-
-if [ ! -d  "${HOME}/workspace/go" ]; then
-  step "mkdir" "making gopath"
-  mkdir "${HOME}/workspace/go"
 fi
 
 echo -e "\e[${green}\n"
 cat <<-'EOF'
 $$\     $$\                         $$$$$$$\
 \$$\   $$  |                        $$  __$$\
- \$$\ $$  /$$$$$$\  $$\   $$\       $$ |  $$ | $$$$$$\   $$$$$$\  $$$$$$$\ 
-  \$$$$  /$$  __$$\ $$ |  $$ |      $$$$$$$\ |$$  __$$\ $$  __$$\ $$  __$$\ 
+ \$$\ $$  /$$$$$$\  $$\   $$\       $$ |  $$ | $$$$$$\   $$$$$$\  $$$$$$$\
+  \$$$$  /$$  __$$\ $$ |  $$ |      $$$$$$$\ |$$  __$$\ $$  __$$\ $$  __$$\
    \$$  / $$ /  $$ |$$ |  $$ |      $$  __$$\ $$$$$$$$ |$$$$$$$$ |$$ |  $$ |
     $$ |  $$ |  $$ |$$ |  $$ |      $$ |  $$ |$$   ____|$$   ____|$$ |  $$ |
     $$ |  \$$$$$$  |\$$$$$$  |      $$$$$$$  |\$$$$$$$\ \$$$$$$$\ $$ |  $$ |
@@ -194,8 +165,8 @@ $$\     $$\                         $$$$$$$\
 
 
 
-$$$$$$$\  $$$$$$$$\  $$$$$$\  $$$$$$$\  $$$$$$$$\ $$$$$$$\ 
-$$  __$$\ $$  _____|$$  __$$\ $$  __$$\ $$  _____|$$  __$$\ 
+$$$$$$$\  $$$$$$$$\  $$$$$$\  $$$$$$$\  $$$$$$$$\ $$$$$$$\
+$$  __$$\ $$  _____|$$  __$$\ $$  __$$\ $$  _____|$$  __$$\
 $$ |  $$ |$$ |      $$ /  $$ |$$ |  $$ |$$ |      $$ |  $$ |
 $$$$$$$\ |$$$$$\    $$$$$$$$ |$$$$$$$  |$$$$$\    $$ |  $$ |
 $$  __$$\ $$  __|   $$  __$$ |$$  __$$< $$  __|   $$ |  $$ |

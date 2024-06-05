@@ -104,7 +104,6 @@ export PATH=$PATH:$HOME/.local/bin
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Note: Bash on Windows does not currently apply umask properly.
 if [[ "$(umask)" = "000" ]]; then
@@ -120,5 +119,13 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 export PATH="$HOME/.rbenv/versions/3.2.0/bin:$PATH"
 
+# Set up android.
+export PATH="/usr/local/android-studio/bin:$PATH"
+
 # Configure FZF to use ripgrep
 export FZF_DEFAULT_COMMAND='rg --files --ignore-vcs --hidden'
+
+# Setup autocomplete & keybindings for fuzzy search.
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+source /usr/share/doc/fzf/examples/completion.zsh
+

@@ -16,6 +16,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
     Plug 'airblade/vim-gitgutter'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
+    Plug 'udalov/kotlin-vim'
 call plug#end()
 
 set number
