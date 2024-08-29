@@ -122,6 +122,9 @@ export PATH="$HOME/.rbenv/versions/3.2.0/bin:$PATH"
 # Set up android.
 export PATH="/usr/local/android-studio/bin:$PATH"
 
+# Set up blender.
+export PATH="/usr/local/blender:$PATH"
+
 # Configure FZF to use ripgrep
 export FZF_DEFAULT_COMMAND='rg --files --ignore-vcs --hidden'
 
@@ -129,3 +132,6 @@ export FZF_DEFAULT_COMMAND='rg --files --ignore-vcs --hidden'
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
 
+# Setup for android development.
+export JAVA_HOME="/usr/local/android-studio/jbr"
+export PATH="/usr/local/android-studio/jbr/bin:$PATH"

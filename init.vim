@@ -1,3 +1,5 @@
+source ~/.config/nvim/coc.vim
+
 set guicursor=
 autocmd OptionSet guicursor noautocmd set guicursor=
 
