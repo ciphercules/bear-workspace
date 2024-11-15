@@ -101,6 +101,10 @@ function main() {
 # Neovim needs a custom PPA. See https://github.com/neovim/neovim/wiki/Installing-Neovim
 installPPA
 
+# Install Node version 18 (supported until 2025)
+# Needed by coc.vim
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+
 declare -a packages=(
   "zsh"
   "neovim"
@@ -109,6 +113,7 @@ declare -a packages=(
   "git"
   "fzf"
   "ripgrep"
+  "nodejs"
   "fonts-powerline"
   "python3-dev"
   "python3-pip"
