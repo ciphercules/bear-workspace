@@ -125,6 +125,9 @@ export PATH="/usr/local/android-studio/bin:$PATH"
 # Set up blender.
 export PATH="/usr/local/blender:$PATH"
 
+# Set up my scripts.
+export PATH="${HOME}/workspace/tools/scripts:$PATH"
+
 # Configure FZF to use ripgrep
 export FZF_DEFAULT_COMMAND='rg --files --ignore-vcs --hidden'
 
