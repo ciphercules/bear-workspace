@@ -144,6 +144,7 @@ link "${PWD}/gitconfig" "${HOME}/.gitconfig"
 link "${PWD}/zshrc" "${HOME}/.zshrc"
 link "${PWD}/aliases.zsh" "${HOME}/.oh-my-zsh/custom/aliases.zsh"
 link "${PWD}/tmux.conf" "${HOME}/.tmux.conf"
+link "${PWD}/coc.vim" "${HOME}/.config/nvim/coc.vim"
 
 local zsh_syntax_highlighting_path="${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 gitClone "${zsh_syntax_highlighting_path}" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
