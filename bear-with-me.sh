@@ -114,6 +114,7 @@ declare -a packages=(
   "fzf"
   "ripgrep"
   "nodejs"
+  "libfuse2" # For AppImages.
   "fonts-powerline"
   "python3-dev"
   "python3-pip"
