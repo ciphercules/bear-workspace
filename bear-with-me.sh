@@ -108,6 +108,7 @@ declare -a packages=(
   "tmux"
   "git"
   "fzf"
+  "ripgrep"
   "fonts-powerline"
   "python3-dev"
   "python3-pip"
@@ -155,7 +156,11 @@ setNvimAsAlternatives
 curl -fLo "${HOME}/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-link ${PWD}/init.vim "${HOME}/.config/nvim"
+if [ ! -d "${HOME}/.config/nvim" ]; then
+  step "mkdir" "nvim config directory"
+  mkdir -p "${HOME}/.config/nvim"
+fi
+link ${PWD}/init.vim "${HOME}/.config/nvim/init.vim"
 
 if [ ! -d  "${HOME}/workspace" ]; then
   step "mkdir" "making workspace"
