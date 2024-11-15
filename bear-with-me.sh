@@ -104,6 +104,11 @@ installPPA
 declare -a packages=(
   "zsh"
   "neovim"
+  "curl"
+  "tmux"
+  "git"
+  "fzf"
+  "fonts-powerline"
   "python3-dev"
   "python3-pip"
 )
@@ -113,27 +118,32 @@ do
   aptGetInstall "${package}"
 done
 
-declare -a pipPackages=(
-  "pynvim"
-  "pipenv"
-)
+#declare -a pipPackages=(
+#  "pynvim"
+#  "pipenv"
+#)
+#
+#for package in "${pipPackages[@]}"
+#do
+#  pip3 install --user "${package}"
+#done
 
-for package in "${pipPackages[@]}"
-do
-  pip3 install --user "${package}"
-done
-
-step "update file" 'adding zsh to ~/.bashrc'
-updateFile "${HOME}/.bashrc" 'bash -c zsh'
+step "update shell" 'changing default shell to zsh'
+chsh -s $(which zsh)
 
 if [ ! -d "${HOME}/.oh-my-zsh" ]; then
   step "curl" "downloading and installing oh my zsh"
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
+step "update file" 'override agnoster theme'
+rm /home/sara/.oh-my-zsh/themes/agnoster.zsh-theme
+link "${PWD}/agnoster.zsh-theme" "${HOME}/.oh-my-zsh/themes/agnoster.zsh-theme"
+
 link "${PWD}/gitconfig" "${HOME}/.gitconfig"
 link "${PWD}/zshrc" "${HOME}/.zshrc"
 link "${PWD}/aliases.zsh" "${HOME}/.oh-my-zsh/custom/aliases.zsh"
+link "${PWD}/tmux.conf" "${HOME}/.tmux.conf"
 
 local zsh_syntax_highlighting_path="${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 gitClone "${zsh_syntax_highlighting_path}" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
@@ -144,8 +154,7 @@ setNvimAsAlternatives
 curl -fLo "${HOME}/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-cp ${PWD}/init.vim "${HOME}/.config/nvim"
-
+link ${PWD}/init.vim "${HOME}/.config/nvim"
 
 if [ ! -d  "${HOME}/workspace" ]; then
   step "mkdir" "making workspace"
