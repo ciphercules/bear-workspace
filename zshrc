@@ -1,3 +1,5 @@
+source "${HOME}/.env"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -138,3 +140,6 @@ source /usr/share/doc/fzf/examples/completion.zsh
 # Setup for android development.
 export JAVA_HOME="/usr/local/android-studio/jbr"
 export PATH="/usr/local/android-studio/jbr/bin:$PATH"
+
+export VISUAL=nvim
+export EDITOR="$VISUAL"
