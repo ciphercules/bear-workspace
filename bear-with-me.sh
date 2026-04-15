@@ -18,32 +18,6 @@ function step() {
 }
 
 
-# Takes two arguments
-# 1: The file to update
-# 2: The original line
-# 3: The new line (optional, if just adding)
-function updateFile(){
-  local file="${1}"
-  local line="${2}"
-  local newLine=${3:-""}
-
-  if [ ! -f "${file}" ]; then
-    touch "${file}"
-  fi
-
-  if grep --fixed-strings --quiet "${line}" "${file}"; then
-    if [[ "${newLine}" != "" ]]; then
-      sed -i "s/^${line}.*/${newLine}/" "${file}"
-    else
-      printf "${file} already contains \n${line}\n. Doing nothing"
-    fi
-  else
-    local temp="$(mktemp --directory)/file"
-    echo "${line}" | cat - "${file}" > "${temp}"
-    mv "${temp}" "${file}"
-  fi
-}
-
 # Takes 1 argument
 # 1: package to install
 function aptGetInstall() {
@@ -80,9 +54,9 @@ function gitClone() {
 	local path="${1}"
 	local repo="${2}"
 
-	if [ ! -d ${path} ]; then
+	if [ ! -d "${path}" ]; then
 		step "git" "cloning ${repo}"
-		git clone "${repo}" ${path}
+		git clone "${repo}" "${path}"
 	fi
 }
 
@@ -90,7 +64,7 @@ function link() {
   local original_file="$1"
   local linked_file="$2"
 
-  if [ ! -f ${linked_file} ]; then
+  if [ ! -f "${linked_file}" ]; then
     step "link" "${linked_file}"
     ln -s "${original_file}" "${linked_file}"
   fi
@@ -98,26 +72,27 @@ function link() {
 
 function main() {
 
+# Install curl first - needed for subsequent downloads
+aptGetInstall "curl"
+
 # Neovim needs a custom PPA. See https://github.com/neovim/neovim/wiki/Installing-Neovim
 installPPA
 
-# Install Node version 18 (supported until 2025)
+# Install Node version 22 LTS (supported until April 2027)
 # Needed by coc.vim
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 
 declare -a packages=(
   "zsh"
   "neovim"
-  "curl"
   "tmux"
-  "git"
   "fzf"
   "ripgrep"
   "nodejs"
   "libfuse2" # For AppImages.
   "fonts-powerline"
-  "python3-dev"
-  "python3-pip"
+  "black" # Needed to install black (Python formatter).
+  "xclip" # X11 clipboard integration for tmux copy/paste.
 )
 
 for package in "${packages[@]}";
@@ -125,26 +100,16 @@ do
   aptGetInstall "${package}"
 done
 
-#declare -a pipPackages=(
-#  "pynvim"
-#  "pipenv"
-#)
-#
-#for package in "${pipPackages[@]}"
-#do
-#  pip3 install --user "${package}"
-#done
-
 step "update shell" 'changing default shell to zsh'
-chsh -s $(which zsh)
+chsh -s "$(which zsh)"
 
 if [ ! -d "${HOME}/.oh-my-zsh" ]; then
   step "curl" "downloading and installing oh my zsh"
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 step "update file" 'override agnoster theme'
-rm /home/sara/.oh-my-zsh/themes/agnoster.zsh-theme
+rm -f "${HOME}/.oh-my-zsh/themes/agnoster.zsh-theme"
 link "${PWD}/agnoster.zsh-theme" "${HOME}/.oh-my-zsh/themes/agnoster.zsh-theme"
 
 link "${PWD}/gitconfig" "${HOME}/.gitconfig"
@@ -166,8 +131,9 @@ if [ ! -d "${HOME}/.config/nvim" ]; then
   step "mkdir" "nvim config directory"
   mkdir -p "${HOME}/.config/nvim"
 fi
-link ${PWD}/init.vim "${HOME}/.config/nvim/init.vim"
+link "${PWD}/init.vim" "${HOME}/.config/nvim/init.vim"
 link "${PWD}/coc.vim" "${HOME}/.config/nvim/coc.vim"
+link "${PWD}/coc-settings.json" "${HOME}/.config/nvim/coc-settings.json"
 
 if [ ! -d  "${HOME}/workspace" ]; then
   step "mkdir" "making workspace"

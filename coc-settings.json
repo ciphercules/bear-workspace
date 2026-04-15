@@ -1,0 +1,44 @@
+{
+  "extensions.autoUpdate": true,
+
+  "coc.preferences.formatOnSave": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python",
+    "go",
+    "c",
+    "cpp",
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact",
+    "yaml",
+    "json",
+    "jsonc",
+    "html",
+    "css",
+    "scss",
+    "less"
+  ],
+
+  "python.formatting.provider": "black",
+
+  "go.goplsOptions": {
+    "local": "",
+    "gofumpt": false,
+    "usePlaceholders": true
+  },
+  "go.goplsArgs": ["-remote=auto"],
+
+  "clangd.fallbackFlags": ["-std=c++17"],
+
+  "prettier.enable": true,
+
+  "yaml.format.enable": true,
+  "yaml.validate": true,
+
+  "json.format.enable": true,
+
+  "html.format.enable": true,
+
+  "css.validate": true
+}
