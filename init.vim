@@ -1,53 +1,68 @@
-source ~/.config/nvim/coc.vim
-
+" Force cursor to be block always.
 set guicursor=
 autocmd OptionSet guicursor noautocmd set guicursor=
 
-call plug#begin('~/.local/share/nvim/site/plugged')
-    Plug 'tpope/vim-sensible'
-    Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-fugitive'
-    Plug 'tpope/vim-vinegar'
-    Plug 'tpope/vim-sleuth'
-    Plug 'mhinz/vim-startify'
-    Plug 'itchyny/lightline.vim'
-    Plug 'sonph/onehalf', { 'rtp': 'vim' }
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'ntpeters/vim-better-whitespace'
-    Plug 'kopischke/vim-fetch'
-    Plug 'airblade/vim-gitgutter'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
-    Plug 'udalov/kotlin-vim'
-call plug#end()
+" Define conditional loading function
+function! Cond(cond, ...)
+    let opts = get(a:000, 0, {})
+    return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
 
-set number
-let g:lightline = {
-    \'colorscheme' : 'onehalfdark',
-    \}
-
-syntax on
-colorscheme onehalfdark
-
-set splitbelow
-set splitright
-
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-autocmd BufWritePre * :StripWhitespace
-autocmd BufWritePost * :GitGutter
-
+" Keep visual block selected when shifting.
 vnoremap < <gv
 vnoremap > >gv
 
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
+" Show line numbers.
+set number
 
-""Bind the fzf :Files command to ctrl-p
-nmap <C-P> :Files<CR>
+" Initialize plugins.
+call plug#begin('~/.local/share/nvim/site/plugged')
+    " Shared plugins.
+    Plug 'tpope/vim-sensible'
+    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-sleuth'
+    Plug 'ntpeters/vim-better-whitespace'
+    " Neovim specific plugins.
+    Plug 'tpope/vim-vinegar', Cond(!exists('g:vscode'))
+    Plug 'tpope/vim-commentary', Cond(!exists('g:vscode'))
+    Plug 'mhinz/vim-startify', Cond(!exists('g:vscode'))
+    Plug 'itchyny/lightline.vim', Cond(!exists('g:vscode'))
+    Plug 'sonph/onehalf', Cond(!exists('g:vscode'), { 'rtp': 'vim' })
+    Plug 'neoclide/coc.nvim', Cond(!exists('g:vscode'), {'branch': 'release'})
+    Plug 'kopischke/vim-fetch', Cond(!exists('g:vscode'))
+    Plug 'airblade/vim-gitgutter', Cond(!exists('g:vscode'))
+    Plug 'junegunn/fzf', Cond(!exists('g:vscode'), { 'do': { -> fzf#install() } })
+    Plug 'junegunn/fzf.vim', Cond(!exists('g:vscode'))
+    Plug 'udalov/kotlin-vim', Cond(!exists('g:vscode'))
+call plug#end()
+
+if !exists('g:vscode')
+    source ~/.config/nvim/coc.vim
+
+    let g:lightline = {
+        \'colorscheme' : 'onehalfdark',
+        \}
+
+    syntax on
+    colorscheme onehalfdark
+
+    set splitbelow
+    set splitright
+
+    nnoremap <C-J> <C-W><C-J>
+    nnoremap <C-K> <C-W><C-K>
+    nnoremap <C-L> <C-W><C-L>
+    nnoremap <C-H> <C-W><C-H>
+
+    autocmd BufWritePre * :StripWhitespace
+    autocmd BufWritePost * :GitGutter
+
+    if exists('+termguicolors')
+      let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+      let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+      set termguicolors
+    endif
+
+    ""Bind the fzf :Files command to ctrl-p
+    nmap <C-P> :Files<CR>
+endif
