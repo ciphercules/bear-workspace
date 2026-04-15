@@ -140,6 +140,9 @@ if [ ! -d  "${HOME}/workspace" ]; then
   mkdir "${HOME}/workspace"
 fi
 
+step "dconf" "load terminal profile"
+dconf load /org/gnome/terminal/ < one-half-dark-profile.txt
+
 echo -e "\e[${green}\n"
 cat <<-'EOF'
 $$\     $$\                         $$$$$$$\
