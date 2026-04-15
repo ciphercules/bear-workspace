@@ -1,5 +1,18 @@
 " https://raw.githubusercontent.com/neoclide/coc.nvim/master/doc/coc-example-config.vim
 
+" Auto-install CoC extensions for all supported languages.
+let g:coc_global_extensions = [
+  \ 'coc-pyright',
+  \ 'coc-go',
+  \ 'coc-clangd',
+  \ 'coc-tsserver',
+  \ 'coc-yaml',
+  \ 'coc-json',
+  \ 'coc-html',
+  \ 'coc-css',
+  \ 'coc-prettier',
+  \ ]
+
 " Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup
